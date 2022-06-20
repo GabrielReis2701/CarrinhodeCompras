@@ -39,8 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         bt_adicionar = findViewById(R.id.bt_adicionarItem);
         bt_finalizar = findViewById(R.id.bt_finalizar);
-        sp_qtd = findViewById(R.id.spinner_qtd);
+        //sp_qtd = findViewById(R.id.spinner_qtd);
         preferencia = new ItemsPreferencia(getApplicationContext());
+        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        recyclerView.setAdapter(adapter);
 
         nomeP = preferencia.recuperarItens("nome");
         valorP = preferencia.recuperarItens("valor");
@@ -64,17 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-        recyclerView = findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
-        recyclerView.setAdapter(adapter);
-
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(
                         getApplicationContext(),
@@ -87,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
+
                                 //Toast.makeText(getApplicationContext(), "Clique longo!", Toast.LENGTH_LONG).show();
                             }
 

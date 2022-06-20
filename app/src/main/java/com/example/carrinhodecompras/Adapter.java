@@ -19,6 +19,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     private List<Carrinho> listaCompras;
 
     public Adapter(List<Carrinho> lista){
+
         this.listaCompras = lista;
     }
 
