@@ -27,10 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private Button bt_adicionar,bt_finalizar;
     private ItemsPreferencia preferencia;
     private String nomeP="",valorP="";
-
-
     private RecyclerView recyclerView;
     private List<Carrinho> carrinhoo = new ArrayList<>();
+    Adapter adapter = new Adapter(carrinhoo);
 
     @SuppressLint("ResourceType")
     @Override
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Adapter adapter = new Adapter(carrinhoo);
+
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void criarItem(){
-        Carrinho carrinho = new Carrinho(nomeP,valorP);
-        this.carrinhoo.add(carrinho);
+        carrinhoo.add(new Carrinho(nomeP,valorP));
+        adapter.notifyItemInserted(carrinhoo.size());
     }
 }
