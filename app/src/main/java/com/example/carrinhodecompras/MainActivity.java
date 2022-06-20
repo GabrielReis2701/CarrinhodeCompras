@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,13 +23,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Spinner sp_qtd;
-    Button bt_adicionar,bt_finalizar;
+    private Spinner sp_qtd;
+    private Button bt_adicionar,bt_finalizar;
+    private ItemsPreferencia preferencia;
+    private String nomeP="",valorP="";
 
 
     private RecyclerView recyclerView;
-    private List<Carrinho> carrinho = new ArrayList<>();
+    private List<Carrinho> carrinhoo = new ArrayList<>();
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +41,21 @@ public class MainActivity extends AppCompatActivity {
         bt_adicionar = findViewById(R.id.bt_adicionarItem);
         bt_finalizar = findViewById(R.id.bt_finalizar);
         sp_qtd = findViewById(R.id.spinner_qtd);
-        String[] nqtd = getResources().getStringArray(R.array.quantidade);
-        sp_qtd.setAdapter(new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, nqtd));
+        preferencia = new ItemsPreferencia(getApplicationContext());
+
+        nomeP = preferencia.recuperarItens("nome");
+        valorP = preferencia.recuperarItens("valor");
+        if(nomeP!=""&&valorP!=""){
+            criarItem();
+        }
+
 
         bt_adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent adicionarI = new Intent(MainActivity.this,AdicionarItem.class);
+                startActivity(adicionarI);
 
             }
         });
@@ -52,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Adapter adapter = new Adapter(carrinho);
+        Adapter adapter = new Adapter(carrinhoo);
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -69,12 +83,12 @@ public class MainActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Toast.makeText(getApplicationContext(), carrinho.get(position).getNome(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), carrinho.get(position).getNome(), Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Toast.makeText(getApplicationContext(), "Clique longo!", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), "Clique longo!", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
@@ -85,5 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+    public void criarItem(){
+        Carrinho carrinho = new Carrinho(nomeP,valorP);
+        this.carrinhoo.add(carrinho);
     }
 }

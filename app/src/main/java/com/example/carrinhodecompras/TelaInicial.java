@@ -33,7 +33,7 @@ public class TelaInicial extends AppCompatActivity {
                 }catch (Exception erro){
                     valor =0;
                 }
-                if(valor==0){
+                if(valor<=0){
                     AlertDialog.Builder janela = new AlertDialog.Builder(TelaInicial.this);
                     janela.setTitle("Carrinho de Compras");
                     janela.setMessage("Por favor informe o orçamento inicial antes de continuar!!!");
